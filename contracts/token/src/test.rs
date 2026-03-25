@@ -12,6 +12,7 @@ fn test_initialize_and_mint() {
     let contract_id = env.register_contract(None, MicroToken);
     let client = MicroTokenClient::new(&env, &contract_id);
 
+    env.mock_all_auths();
     client.initialize(&admin);
     client.mint(&to, &1000);
 
@@ -28,6 +29,7 @@ fn test_transfer() {
     let contract_id = env.register_contract(None, MicroToken);
     let client = MicroTokenClient::new(&env, &contract_id);
 
+    env.mock_all_auths();
     client.initialize(&admin);
     client.mint(&user1, &500);
 
@@ -48,6 +50,7 @@ fn test_transfer_insufficient_balance() {
     let contract_id = env.register_contract(None, MicroToken);
     let client = MicroTokenClient::new(&env, &contract_id);
 
+    env.mock_all_auths();
     client.initialize(&admin);
     client.mint(&user1, &100);
 

@@ -12,6 +12,7 @@ fn test_create_campaign() {
     let contract_id = env.register_contract(None, MicroFund);
     let client = MicroFundClient::new(&env, &contract_id);
 
+    env.mock_all_auths();
     client.initialize(&token);
 
     let title = String::from_str(&env, "Test Project");
@@ -37,6 +38,7 @@ fn test_create_campaign_invalid_goal() {
     let contract_id = env.register_contract(None, MicroFund);
     let client = MicroFundClient::new(&env, &contract_id);
 
+    env.mock_all_auths();
     client.initialize(&token);
 
     let title = String::from_str(&env, "Bad Project");
@@ -57,12 +59,13 @@ fn test_create_campaign_old_deadline() {
     let contract_id = env.register_contract(None, MicroFund);
     let client = MicroFundClient::new(&env, &contract_id);
 
+    env.mock_all_auths();
     client.initialize(&token);
 
     let title = String::from_str(&env, "Old Project");
     let description = String::from_str(&env, "Old Description");
     let goal = 1000;
-    let deadline = 10; // clearly in the past
+    let deadline = 0; // clearly in the past or present
 
     client.create_campaign(&creator, &title, &description, &goal, &deadline);
 }
