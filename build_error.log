@@ -1,0 +1,38 @@
+ΓÜá∩╕Å  Cargo home directory contains whitespace. Dependency paths will not be remapped; builds may not be reproducible.
+Γä╣∩╕Å  cargo rustc --manifest-path=contracts\fundraiser\Cargo.toml --crate-type=cdylib --target=wasm32v1-none --release
+   Compiling micro-fund v0.1.0 (D:\stellar3\contracts\fundraiser)
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+  --> contracts\fundraiser\src\lib.rs:62:22
+   |
+62 |         env.events().publish((symbol_short!("created"), id), creator);
+   |                      ^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+  --> contracts\fundraiser\src\lib.rs:85:22
+   |
+85 |         env.events().publish((symbol_short!("donated"), campaign_id), donor);
+   |                      ^^^^^^^
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> contracts\fundraiser\src\lib.rs:110:22
+    |
+110 |         env.events().publish((symbol_short!("withdrawn"), campaign_id), campaign.creator.clone());
+    |                      ^^^^^^^
+
+warning: `micro-fund` (lib) generated 3 warnings
+    Finished `release` profile [optimized] target(s) in 1.71s
+Γä╣∩╕Å  Build Summary:
+    Wasm File: target\wasm32v1-none\release\micro_fund.wasm (5567 bytes)
+    Wasm Hash: 48d679b59d8520bbc7655890233fb0f8720b550dc71233c51c28625aa54a4eb2
+    Wasm Size: 5567 bytes
+    Exported Functions: 6 found
+      ΓÇó create_campaign
+      ΓÇó donate
+      ΓÇó get_campaign
+      ΓÇó get_campaigns
+      ΓÇó initialize
+      ΓÇó withdraw
+Γ£à Build Complete
+
