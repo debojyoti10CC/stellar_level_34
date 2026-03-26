@@ -6,6 +6,11 @@ export default defineConfig({
   define: {
     'process.env': {},
   },
+  css: {
+    postcss: {
+      plugins: []
+    }
+  },
   server: {
     port: 3000,
   },

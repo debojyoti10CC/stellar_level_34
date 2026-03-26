@@ -72,3 +72,7 @@ Successfully passed:
 
 ---
 **MicroFund v1.0** — Built with ❤️ for the Stellar Ecosystem.
+
+**Live Testnet Addresses:**
+- **MicroToken**: `CAIAKTVEE6KHE7W33MNYX3AAJ4MRDY4LK7NOUG72K6UVL353QGKQNEXT`
+- **MicroFund**: `CDMMACMOQKK5ELVLTMNMVD7ZJ5K63Y4SHJWLL4GMLGY2JMGFDNHQVFS7`

@@ -1,9 +1,9 @@
 #![no_std]
-use soroban_sdk::{contract, contractimpl, contracttype, symbol_short, Address, Env, String, Symbol, Vec};
-
-mod token {
-    soroban_sdk::contractimport!(file = "../../target/wasm32v1-none/release/micro_token.wasm");
-}
+use soroban_sdk::{
+    contract, contractimpl, contracttype, symbol_short,
+    Address, Env, String, Symbol, Vec,
+    token,
+};
 
 #[derive(Clone)]
 #[contracttype]
@@ -21,20 +21,30 @@ pub struct Campaign {
 #[contract]
 pub struct MicroFund;
 
-const TOKEN: Symbol = symbol_short!("TOKEN");
 const COUNTER: Symbol = symbol_short!("COUNTER");
+const XLM_SAC: Symbol = symbol_short!("XLMSAC");
 
 #[contractimpl]
 impl MicroFund {
-    pub fn initialize(env: Env, token: Address) {
-        if env.storage().instance().has(&TOKEN) {
+    /// Call once after deploy: pass the native XLM SAC address.
+    /// On testnet you can get it with:
+    ///   stellar contract id asset --asset native --network testnet
+    pub fn initialize(env: Env, xlm_sac: Address) {
+        if env.storage().instance().has(&XLM_SAC) {
             panic!("already initialized");
         }
-        env.storage().instance().set(&TOKEN, &token);
+        env.storage().instance().set(&XLM_SAC, &xlm_sac);
         env.storage().instance().set(&COUNTER, &0u32);
     }
 
-    pub fn create_campaign(env: Env, creator: Address, title: String, description: String, goal: i128, deadline: u64) -> u32 {
+    pub fn create_campaign(
+        env: Env,
+        creator: Address,
+        title: String,
+        description: String,
+        goal: i128,
+        deadline: u64,
+    ) -> u32 {
         creator.require_auth();
 
         if goal <= 0 {
@@ -58,56 +68,68 @@ impl MicroFund {
 
         env.storage().persistent().set(&id, &campaign);
         env.storage().instance().set(&COUNTER, &(id + 1));
-
         env.events().publish((symbol_short!("created"), id), creator);
 
         id
     }
 
+    /// Donate `amount` stroops of XLM to a campaign.
+    /// 1 XLM = 10_000_000 stroops.
     pub fn donate(env: Env, donor: Address, campaign_id: u32, amount: i128) {
         donor.require_auth();
 
-        let mut campaign: Campaign = env.storage().persistent().get(&campaign_id).expect("campaign not found");
+        let mut campaign: Campaign = env
+            .storage()
+            .persistent()
+            .get(&campaign_id)
+            .expect("campaign not found");
 
         if env.ledger().timestamp() >= campaign.deadline {
             panic!("campaign expired");
         }
 
-        let token_address: Address = env.storage().instance().get(&TOKEN).unwrap();
-        let token_client = token::Client::new(&env, &token_address);
-        
-        // Transfer tokens from donor to this contract
-        token_client.transfer(&donor, &env.current_contract_address(), &amount);
+        let xlm_sac: Address = env.storage().instance().get(&XLM_SAC).unwrap();
+        let xlm = token::Client::new(&env, &xlm_sac);
+
+        // Transfer XLM (in stroops) from donor to this contract
+        xlm.transfer(&donor, &env.current_contract_address(), &amount);
 
         campaign.amount_raised += amount;
         env.storage().persistent().set(&campaign_id, &campaign);
-
         env.events().publish((symbol_short!("donated"), campaign_id), donor);
     }
 
+    /// Withdraw raised XLM to the creator (only when goal met or deadline passed).
     pub fn withdraw(env: Env, campaign_id: u32) {
-        let mut campaign: Campaign = env.storage().persistent().get(&campaign_id).expect("campaign not found");
+        let mut campaign: Campaign = env
+            .storage()
+            .persistent()
+            .get(&campaign_id)
+            .expect("campaign not found");
         campaign.creator.require_auth();
 
         if campaign.withdrawn {
             panic!("already withdrawn");
         }
-
-        let can_withdraw = campaign.amount_raised >= campaign.goal || env.ledger().timestamp() >= campaign.deadline;
-
+        let can_withdraw = campaign.amount_raised >= campaign.goal
+            || env.ledger().timestamp() >= campaign.deadline;
         if !can_withdraw {
             panic!("cannot withdraw yet");
         }
 
-        let token_address: Address = env.storage().instance().get(&TOKEN).unwrap();
-        let token_client = token::Client::new(&env, &token_address);
+        let xlm_sac: Address = env.storage().instance().get(&XLM_SAC).unwrap();
+        let xlm = token::Client::new(&env, &xlm_sac);
 
-        token_client.transfer(&env.current_contract_address(), &campaign.creator, &campaign.amount_raised);
+        xlm.transfer(
+            &env.current_contract_address(),
+            &campaign.creator,
+            &campaign.amount_raised,
+        );
 
         campaign.withdrawn = true;
         env.storage().persistent().set(&campaign_id, &campaign);
-
-        env.events().publish((symbol_short!("withdrawn"), campaign_id), campaign.creator.clone());
+        env.events()
+            .publish((symbol_short!("withdrawn"), campaign_id), campaign.creator.clone());
     }
 
     pub fn get_campaign(env: Env, id: u32) -> Campaign {
