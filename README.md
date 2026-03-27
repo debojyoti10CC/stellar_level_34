@@ -1,4 +1,4 @@
-# MicroFund | Decentralized XLM Crowdfunding 🚀
+# MicroFund | Decentralized XLM Crowdfunding 
 
 MicroFund is a Web3 Mini dApp built directly on the **Stellar Testnet** using Soroban smart contracts. It enables users to launch secure fundraising campaigns and seamlessly accept micro-donations in **native XLM**. 
 
@@ -19,6 +19,7 @@ With a premium glassmorphic UI, it ensures complete transparency: campaigns are 
 - **Dev Tools**: Stellar CLI, rustc
 
 ---
+https://youtu.be/0XcUFu0G8JI
 
 ## 🌐 Live Contract & Addresses (Stellar Testnet)
 
