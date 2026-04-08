@@ -6,14 +6,14 @@ MicroFund is a Web3 Mini dApp built directly on the **Stellar Testnet** using So
 
 With a premium glassmorphic UI, it ensures complete transparency: campaigns are strictly bound by their on-chain goals and deadlines, and creators can only withdraw funds once those fully trustless conditions are met.
 
-## 🎯 Key Features
+##  Key Features
 - **Native XLM Integration**: Complete shift to the native Stellar Asset Contract (SAC). No need for custom tokens; donations and goals are denominated purely in XLM.
 - **Trustless Escrow**: The smart contract acts as an escrow. The funds sit securely on-chain until the goal is met or the deadline has passed.
 - **Creator Withdrawals**: Creators can extract their XLM instantly once conditions are met.
 - **Live Data Polling**: Real-time integration with the Stellar Testnet using Freighter API and `@stellar/stellar-sdk`.
 - **Premium UI**: Modern dark mode, glassmorphism aesthetics, responsive campaign grids, dynamic progress bars, and beautifully animated toast notifications.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 - **Smart Contracts**: Rust & Soroban (Stellar)
 - **Frontend**: React, Vite, Vanilla CSS
 - **Wallet**: Freighter (Stellar browser extension)
@@ -24,7 +24,7 @@ With a premium glassmorphic UI, it ensures complete transparency: campaigns are 
 ---
 https://youtu.be/0XcUFu0G8JI
 
-## 🌐 Live Contract & Addresses (Stellar Testnet)
+##  Live Contract & Addresses (Stellar Testnet)
 
 - **MicroFund Contract ID:** `CDEJRTP2JFJYI6S2BO2FWL55XIIVHJDFS65PNKYILLG4CEVX2PWUPD3Z`
 - **Native XLM SAC Address:** `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
