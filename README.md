@@ -33,7 +33,7 @@ https://youtu.be/0XcUFu0G8JI
 
 ---
 
-## 🚀 Workflows: How to Use the DApp
+##  Workflows: How to Use the DApp
 
 ### 1. Connect & Get XLM
 * You must have the [Freighter Wallet](https://www.freighter.app/) extension installed in your browser.
@@ -60,7 +60,7 @@ https://youtu.be/0XcUFu0G8JI
 
 ---
 
-## 💻 Developer Setup: Running Locally
+##  Developer Setup: Running Locally
 
 ### 1. Smart Contract Deployment (Optional)
 If you wish to deploy your own instance of the MicroFund contract:
@@ -86,7 +86,7 @@ npm install
 npm run dev
 ```
 
-## 🏗️ Deployment to Vercel/Netlify
+##  Deployment to Vercel/Netlify
 
 To make your frontend live to the world:
 1. Import your GitHub repository to Vercel.
