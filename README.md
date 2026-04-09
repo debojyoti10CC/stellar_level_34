@@ -95,4 +95,4 @@ To make your frontend live to the world:
 4. Deploy! Your DApp is now live.
 
 ---
-**MicroFund** — Built with ❤️ for the Stellar Ecosystem.
+
