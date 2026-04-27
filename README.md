@@ -86,13 +86,7 @@ npm install
 npm run dev
 ```
 
-##  Deployment to Vercel/Netlify
 
-To make your frontend live to the world:
-1. Import your GitHub repository to Vercel.
-2. Under "Framework Preset", ensure **Vite** is selected.
-3. Under "Root Directory", click edit and type **`frontend`** (this is critically important).
-4. Deploy! Your DApp is now live.
 
 ---
 
